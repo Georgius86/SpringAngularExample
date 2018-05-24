@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Contact Form</title>
+</head>
+<body>
+<h3>Kreiraj korisnika:</h3>
+<div class="backdrop" [ngStyle]="{'display':display}"></div>
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Kreiraj korisnika</h4>
+      </div>
+
+      <div class="modal-body">
+
+        <div [hidden]="submitted" style="width: 300px;">
+          <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="first_name">Ime</label> <input type="text"
+                                                               class="form-control" id="first_name" required
+                                                               [(ngModel)]="contact.firstName" name="first_name">
+            </div>
+
+            <div class="form-group">
+              <label for="last_name">Prezime</label> <input type="text"
+                                                             class="form-control" id="last_name" required
+                                                             [(ngModel)]="contact.lastName" name="last_name">
+            </div>
+
+            <div class="form-group">
+              <label for="sex">Spol</label> <input type="text"
+                                                             class="form-control" id="sex" required
+                                                             [(ngModel)]="contact.sex.name" name="sex">
+            </div>
+
+            <div class="form-group">
+            <label for="street">Ulica</label> <input type="text"
+                                                         class="form-control" id="street" required
+                                                         [(ngModel)]="contact.address.street" name="street">
+          </div>
+
+            <div class="form-group">
+              <label for="street_no">Kućni broj</label> <input type="text"
+                                                           class="form-control" id="street_no" required
+                                                           [(ngModel)]="contact.address.streetNo" name="street_no">
+            </div>
+
+            <div class="form-group">
+              <label for="city">Grad</label> <input type="text"
+                                                               class="form-control" id="city" required
+                                                               [(ngModel)]="contact.address.city.name" name="city">
+            </div>
+
+            <div class="form-group">
+              <label for="zip_code">Poštanski broj</label> <input type="text"
+                                                               class="form-control" id="zip_code" required
+                                                               [(ngModel)]="contact.address.city.zipCode" name="zip_code">
+            </div>
+
+            <div class="form-group">
+              <label for="country">Zemlja</label> <input type="text"
+                                                               class="form-control" id="country" required
+                                                               [(ngModel)]="contact.address.city.country.name" name="country">
+            </div>
+
+            <div class="btn-group">
+              <button class="btn btn-primary" (click)="goBack()">Nazad</button>
+              <button type="submit" class="btn btn-success">Kreiraj</button>
+            </div>
+          </form>
+        </div>
+
+        <div [hidden]="!submitted">
+          <div class="btn-group ">
+            <h4>Kreiran je novi korisnik!</h4>
+            <button class="btn btn-primary" (click)="goBack()">Nazad</button>
+            <button class="btn btn-success" (click)="newContact()">Dodaj</button>
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div><!-- /.modal-content -->
+
+
+  </div><!-- /.modal-dialog -->
+
+
+</div><!-- /.modal !-->
+</body>
+</html>

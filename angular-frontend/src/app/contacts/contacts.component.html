@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kontakti</title>
+</head>
+<body>
+
+<!-- GRID za listu kontakata-->
+<div class="container">
+  <h1>Lista kontakata</h1>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Ime i prezime</th>
+      <th>Spol</th>
+      <th>Ulica</th>
+      <th>Broj</th>
+      <th>Grad</th>
+      <th>Poštanski broj</th>
+      <th>Zemlja</th>
+      <th>Akcija</th>
+    </tr>
+    </thead>
+    <!-- Ovdje je moguće mijenjati sa Route za loadAll i search -->
+    <tbody>
+    <tr *ngFor="let contact of contacts">
+    <td>{{contact.firstName}} {{contact.lastName}}</td>
+      <td>{{contact.sex.name}}</td>
+    <td>{{contact.address.street}}</td>
+    <td>{{contact.address.streetNo}}</td>
+    <td>{{contact.address.city.name}}</td>
+    <td>{{contact.address.city.zipCode}}</td>
+      <td>{{contact.address.city.country.name}}</td>
+      <td><button class="btn btn-danger" (click)="delete()">Delete</button></td> <!-- DELETE treba definirati prvo-->
+    </tr>
+    </tbody>
+  </table>
+</div>
+<ul>
+  <li *ngFor="let cont of contacts"
+  [class.selected]="cont === selectedContact" (click)="onSelect(cont)">
+
+
+  </li>
+</ul>
+</body>
+</html>

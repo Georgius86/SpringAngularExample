@@ -1,0 +1,356 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.9
+-- Dumped by pg_dump version 10.0
+
+-- Started on 2018-05-24 13:52:58
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 1 (class 3079 OID 12355)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2151 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 183 (class 1259 OID 17272)
+-- Name: address; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE address (
+    id bigint NOT NULL,
+    street character varying,
+    street_no character varying,
+    city_id bigint
+);
+
+
+ALTER TABLE address OWNER TO postgres;
+
+--
+-- TOC entry 184 (class 1259 OID 17285)
+-- Name: city; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE city (
+    id bigint NOT NULL,
+    name character varying,
+    zip_code character varying,
+    country_id bigint
+);
+
+
+ALTER TABLE city OWNER TO postgres;
+
+--
+-- TOC entry 182 (class 1259 OID 17259)
+-- Name: contact; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE contact (
+    id bigint NOT NULL,
+    first_name character varying,
+    last_name character varying,
+    phone character varying,
+    email character varying,
+    sex_id bigint,
+    address_id bigint
+);
+
+
+ALTER TABLE contact OWNER TO postgres;
+
+--
+-- TOC entry 185 (class 1259 OID 17300)
+-- Name: country; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE country (
+    id bigint NOT NULL,
+    name character varying,
+    alpha_2 character varying,
+    alpha_3 character varying
+);
+
+
+ALTER TABLE country OWNER TO postgres;
+
+--
+-- TOC entry 186 (class 1259 OID 25562)
+-- Name: hibernate_sequence; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE hibernate_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hibernate_sequence OWNER TO postgres;
+
+--
+-- TOC entry 181 (class 1259 OID 17221)
+-- Name: sex; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE sex (
+    id bigint NOT NULL,
+    name character varying
+);
+
+
+ALTER TABLE sex OWNER TO postgres;
+
+--
+-- TOC entry 2140 (class 0 OID 17272)
+-- Dependencies: 183
+-- Data for Name: address; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY address (id, street, street_no, city_id) FROM stdin;
+1	Kralja Tomislava	32	1
+2	Kralja Zvonimira	45	2
+3	Kralja Petra Krešimira IV	112	3
+\.
+
+
+--
+-- TOC entry 2141 (class 0 OID 17285)
+-- Dependencies: 184
+-- Data for Name: city; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY city (id, name, zip_code, country_id) FROM stdin;
+1	Osijek	31000	1
+2	Zagreb	10000	1
+3	Split	21000	1
+\.
+
+
+--
+-- TOC entry 2139 (class 0 OID 17259)
+-- Dependencies: 182
+-- Data for Name: contact; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY contact (id, first_name, last_name, phone, email, sex_id, address_id) FROM stdin;
+1	Zvonko	Frljić	+38531744566	zvonko@gmail.com	1	1
+2	Matija	Knežić	+38521744577	matija@gmail.com	1	2
+3	Dora	Mehić	+38521744588	dora@gmail.com	2	3
+\.
+
+
+--
+-- TOC entry 2142 (class 0 OID 17300)
+-- Dependencies: 185
+-- Data for Name: country; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY country (id, name, alpha_2, alpha_3) FROM stdin;
+1	Croatia	null	null
+\.
+
+
+--
+-- TOC entry 2138 (class 0 OID 17221)
+-- Dependencies: 181
+-- Data for Name: sex; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY sex (id, name) FROM stdin;
+1	male
+2	female
+\.
+
+
+--
+-- TOC entry 2152 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('hibernate_sequence', 1, false);
+
+
+--
+-- TOC entry 2007 (class 2606 OID 17266)
+-- Name: contact Customer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY contact
+    ADD CONSTRAINT "Customer_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2009 (class 2606 OID 17279)
+-- Name: address address_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY address
+    ADD CONSTRAINT address_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2011 (class 2606 OID 17353)
+-- Name: city city_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY city
+    ADD CONSTRAINT city_name_key UNIQUE (name);
+
+
+--
+-- TOC entry 2013 (class 2606 OID 17292)
+-- Name: city city_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY city
+    ADD CONSTRAINT city_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2015 (class 2606 OID 17307)
+-- Name: country country_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY country
+    ADD CONSTRAINT country_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2003 (class 2606 OID 17228)
+-- Name: sex id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY sex
+    ADD CONSTRAINT id PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2005 (class 2606 OID 17421)
+-- Name: sex name; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY sex
+    ADD CONSTRAINT name UNIQUE (name);
+
+
+--
+-- TOC entry 2016 (class 2606 OID 17267)
+-- Name: contact Customer_sex_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY contact
+    ADD CONSTRAINT "Customer_sex_id_fkey" FOREIGN KEY (sex_id) REFERENCES sex(id);
+
+
+--
+-- TOC entry 2020 (class 2606 OID 17295)
+-- Name: address address_city_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY address
+    ADD CONSTRAINT address_city_id_fkey FOREIGN KEY (city_id) REFERENCES city(id);
+
+
+--
+-- TOC entry 2022 (class 2606 OID 17308)
+-- Name: city city_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY city
+    ADD CONSTRAINT city_country_id_fkey FOREIGN KEY (country_id) REFERENCES country(id);
+
+
+--
+-- TOC entry 2017 (class 2606 OID 17280)
+-- Name: contact customer_address_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY contact
+    ADD CONSTRAINT customer_address_id_fkey FOREIGN KEY (address_id) REFERENCES address(id);
+
+
+--
+-- TOC entry 2018 (class 2606 OID 25584)
+-- Name: contact fkl0sju2uai8cgdtic18wy5hlfr; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY contact
+    ADD CONSTRAINT fkl0sju2uai8cgdtic18wy5hlfr FOREIGN KEY (address_id) REFERENCES address(id);
+
+
+--
+-- TOC entry 2021 (class 2606 OID 25564)
+-- Name: address fkpo044ng5x4gynb291cv24vtea; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY address
+    ADD CONSTRAINT fkpo044ng5x4gynb291cv24vtea FOREIGN KEY (city_id) REFERENCES city(id);
+
+
+--
+-- TOC entry 2019 (class 2606 OID 25589)
+-- Name: contact fkqorcfgd7vjgiw5bdwn1gfjjhq; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY contact
+    ADD CONSTRAINT fkqorcfgd7vjgiw5bdwn1gfjjhq FOREIGN KEY (sex_id) REFERENCES sex(id);
+
+
+--
+-- TOC entry 2023 (class 2606 OID 25569)
+-- Name: city fkrpd7j1p7yxr784adkx4pyepba; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY city
+    ADD CONSTRAINT fkrpd7j1p7yxr784adkx4pyepba FOREIGN KEY (country_id) REFERENCES country(id);
+
+
+--
+-- TOC entry 2150 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2018-05-24 13:52:59
+
+--
+-- PostgreSQL database dump complete
+--
+

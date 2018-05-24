@@ -1,0 +1,7 @@
+form-group.search{
+  float: left;
+}
+
+btn.btn-primary.active.add{
+  float: right;
+}
