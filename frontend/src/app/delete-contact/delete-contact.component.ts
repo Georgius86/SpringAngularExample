@@ -2,7 +2,7 @@
 
 
 import {DataService} from '../data.service';
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Contact} from '../model/contact';
 
 @Component({
@@ -10,7 +10,7 @@ import {Contact} from '../model/contact';
   providers: [DataService]
 })
 
-export class  DeleteContactComponent{
+export class  DeleteContactComponent implements OnInit{
 
   @Input() contact: Contact;
 
@@ -22,5 +22,9 @@ export class  DeleteContactComponent{
 
   private goBack() {
     window.location.replace('');
+  }
+
+  ngOnInit():void{
+    this.delete() ;
   }
 }
